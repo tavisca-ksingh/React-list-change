@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  state ={
+   value : "Krishna Singh",
+   isInEditMode : false
+  }
+
+  changeEditeMode = () =>{
+    this.setState({
+      isInEditMode : !this.state.isInEditMode
+    })
+  }
+  renderDefaultMode() {
+    return <div onDoubleClick={this.changeEditeMode}>
+      {this.state.value}
+    </div>;
+  }
+updateValue = () =>{
+    this.setState({isInEditMode:false,
+    value: this.refs.theTextInput.value
+    })
+}
+  renderEditMode() {
+    return <div>
+    {this.state.value}
+    <br/>
+    <div align='center'>
+      <input type="text" defaultValue={this.state.value} ref="theTextInput" />
+      <button onClick = {this.updateValue}>Save</button>
+      </div>
+      </div>;
+  }
+
+  render() {
+    return this.state.isInEditMode ?
+    this.renderEditMode() : this.renderDefaultMode()
+    
+  }
+
+  
 }
 
 export default App;
